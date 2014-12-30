@@ -77,7 +77,7 @@ public class Pos {
 
                stringBuilder .append("----------------------\n")
                 .append("总计：").append(String.format("%.2f",Total )).append("(元)").append("\n")
-                       .append("节省:").append(String.format("%.2f",StartTotal-Total)).append("元").append("\n")
+                       .append("节省：").append(String.format("%.2f",StartTotal-Total)).append("(元)").append("\n")
                 .append("**********************\n")
                 .toString();
 
