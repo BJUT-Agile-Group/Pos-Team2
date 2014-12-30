@@ -1,5 +1,6 @@
 package main;
 
+import Utility.ManageDao;
 import domains.Item;
 import domains.Pos;
 import domains.ShoppingChart;
@@ -17,9 +18,13 @@ public class POSmain {
 
        ShoppingChart shoppingChart = new ShoppingChart();
 
+        ManageDao mainDao=new ManageDao();
 
-            shoppingChart.add(new Item("ITEM000001","雪碧","瓶",3.00,0.8));
-            shoppingChart.add(new Item("ITEM000004","电池","个",2.00,0.7));
+        shoppingChart.setItems(mainDao.getData());
+
+         //   shoppingChart.add(new Item("ITEM000001","雪碧","瓶",3.00,0.8));
+           // shoppingChart.add(new Item("ITEM000004","电池","个",2.00,0.7));
+
 
 
 
