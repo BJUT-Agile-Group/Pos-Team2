@@ -1,9 +1,6 @@
 package domains;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2014/12/28.
@@ -13,19 +10,16 @@ public class Pos {
     //返回主要的界面
     public String getShoppingList(ShoppingChart shoppingChart) {
         ArrayList<Item> items = shoppingChart.getItems();
-
-        double XuebiPrice=0.0,ColaPrice=0.0,BearPrice=0.0;
-        double Xuebidiscount=0.0,ColaDiscount=0.0,BearDiscount=0.0;
-        int XueBiNumber=0,ColaNumber=0,BearNumber=0;
-        String Colaunit="",BearUnit="",XuebiUnit="";
-        Map<String,Good> goodMapping =new HashMap<String, Good>();
-
+        Map<String,Good> goodMapping =new HashMap<String, Good>();//映射存储商品名字和信息的映射
+        List<String> nameList=new ArrayList<String>();//商品名字列表在遍历HashMap时使用，Hashmap自动排序遭不住啊……
        for(int i=0;i<items.size();i++){
            Item item=items.get(i);
-           if(goodMapping.containsKey(item.getName())==false){
+          // System.out.println("Name:"+item.getName());
+           if(goodMapping.containsKey(item.getName())==false){//如果不存在这个映射就加入这个映射
                goodMapping.put(item.getName(),new Good(item.getPrice(),item.getDiscount(),item.getUnit(),item.getPrice()));
+               nameList.add(item.getName());
            }
-            else
+            else//如果存在就对信息进行加减操作
            {
                goodMapping.get(item.getName()).statistics(item.getPrice(),item.getDiscount());
            }
@@ -37,18 +31,22 @@ public class Pos {
 
 
 
-        double ColaTotal=ColaNumber*ColaPrice;
-        double BearTotal=BearNumber*BearPrice;
-        double XuebiTotal=XueBiNumber*XuebiPrice;
-        double StartTotal=ColaTotal+BearTotal+XuebiTotal;
-        double total=0,save=0;
-        Iterator iterator=goodMapping.entrySet().iterator();
 
-        while(iterator.hasNext())
+        double total=0,save=0;
+        Iterator iterator=nameList.iterator();
+        //下面是按自动排序的顺序输出的遍历，又需要再注释回来
+        //Iterator it=goodMapping.entrySet().iterator();
+//        while(iterator.hasNext())
+//        {
+//            Map.Entry entry= (Map.Entry) iterator.next();
+//            stringBuilder.append("名称：").append(entry.getKey());
+//            stringBuilder.append(((Good)entry.getValue()).toString());
+//        }
+        while(iterator.hasNext())//遍历应该看得懂吧，看不懂，宝宝实在是……
         {
-            Map.Entry entry=(Map.Entry) iterator.next();
-            stringBuilder.append("名称：").append(entry.getKey().toString());
-            Good good=(Good)entry.getValue();
+            String name=(String)iterator.next();
+            stringBuilder.append("名称：").append(name);
+            Good good=goodMapping.get(name);
             stringBuilder.append(good.toString());
             total=total+good.getPrice();
             save=save+good.getSave();
