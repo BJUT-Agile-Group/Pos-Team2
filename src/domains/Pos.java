@@ -14,9 +14,9 @@ public class Pos {
         List<String> nameList=new ArrayList<String>();//商品名字列表在遍历HashMap时使用，Hashmap自动排序遭不住啊……
        for(int i=0;i<items.size();i++){
            Item item=items.get(i);
-          // System.out.println("Name:"+item.getName());
+
            if(goodMapping.containsKey(item.getName())==false){//如果不存在这个映射就加入这个映射
-               goodMapping.put(item.getName(),new Good(item.getPrice(),item.getDiscount(),item.getUnit(),item.getPrice()));
+               goodMapping.put(item.getName(),new Good(item.getPrice(),item.getDiscount(),item.getUnit()));
                nameList.add(item.getName());
            }
             else//如果存在就对信息进行加减操作
@@ -48,28 +48,10 @@ public class Pos {
             stringBuilder.append("名称：").append(name);
             Good good=goodMapping.get(name);
             stringBuilder.append(good.toString());
-            total=total+good.getPrice();
+            total=total+good.getAmount();
             save=save+good.getSave();
         }
 
-           /* if(ColaNumber!=0){
-                stringBuilder.append("名称：").append("可口可乐").append("，")
-                        .append("数量：").append(ColaNumber).append(Colaunit).append("，")
-                        .append("单价：").append(String.format("%.2f", ColaPrice)).append("(元)").append("，")
-                        .append("小计：").append(String.format("%.2f", ColaTotal*ColaDiscount)).append("(元)").append("\n");
-            }
-             if(BearNumber!=0){
-                 stringBuilder.append("名称：").append("电池").append("，")
-                         .append("数量：").append(BearNumber).append(BearUnit).append("，")
-                         .append("单价：").append(String.format("%.2f", BearPrice)).append("(元)").append("，")
-                         .append("小计：").append(String.format("%.2f", BearTotal*BearDiscount)).append("(元)").append("\n");
-            }
-            if(XueBiNumber!=0){
-                stringBuilder.append("名称：").append("雪碧").append("，")
-                        .append("数量：").append(XueBiNumber).append(XuebiUnit).append("，")
-                        .append("单价：").append(String.format("%.2f", XuebiPrice)).append("(元)").append("，")
-                        .append("小计：").append(String.format("%.2f",XuebiTotal*Xuebidiscount)).append("(元)").append("\n");
-            }*/
 
                stringBuilder .append("----------------------\n")
                 .append("总计：").append(String.format("%.2f",total )).append("(元)").append("\n");
