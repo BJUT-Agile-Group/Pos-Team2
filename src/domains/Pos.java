@@ -52,7 +52,6 @@ public class Pos {
             save=save+good.getSave();
         }
 
-
                stringBuilder .append("----------------------\n")
                 .append("总计：").append(String.format("%.2f",total )).append("(元)").append("\n");
                 if(save!=0)
