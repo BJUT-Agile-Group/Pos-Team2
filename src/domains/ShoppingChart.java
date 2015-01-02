@@ -15,5 +15,8 @@ public class ShoppingChart {
     public ArrayList<Item> getItems() {
         return items;
     }
-    public void setItems(ArrayList<Item>  list){ items=list ;}
+
+    public void setItems(ArrayList<Item> list) {
+        items = list;
+    }
 }

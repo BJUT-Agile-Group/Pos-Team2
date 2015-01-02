@@ -8,16 +8,20 @@ public class BaseItem {
     private String unit;
     private double price;
     private double discount;
-    public BaseItem(){}
-    public BaseItem(String unit,double price,double discount){
-        this.unit=unit;
-        this.price=price;
-        this.discount=discount;
+
+    public BaseItem() {
     }
-    public BaseItem(String unit,double price){
-        this.unit=unit;
-        this.price=price;
-        this.discount=1;
+
+    public BaseItem(String unit, double price, double discount) {
+        this.unit = unit;
+        this.price = price;
+        this.discount = discount;
+    }
+
+    public BaseItem(String unit, double price) {
+        this.unit = unit;
+        this.price = price;
+        this.discount = 1;
     }
 
     public String getUnit() {

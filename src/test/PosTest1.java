@@ -1,5 +1,6 @@
 package test;
 
+import Utility.ManageDao;
 import domains.Item;
 import domains.Pos;
 import domains.ShoppingChart;
@@ -12,6 +13,35 @@ import static org.junit.Assert.assertThat;
  * Created by Administrator on 2014/12/28.
  */
 public class PosTest1 {
+    public void test3(){
+        String GoodPath="F:\\good1.json";
+        String List="F:\\list.json";
+
+        ShoppingChart shoppingChart = new ShoppingChart();
+
+        ManageDao mainDao = new ManageDao(GoodPath,List);
+
+        shoppingChart.setItems(mainDao.getData());
+
+        // when
+        Pos pos = new Pos();
+        String ShoppingList = pos.getShoppingList(shoppingChart);
+
+
+
+        String expectedShoppingList=
+       " ***商店购物清单***"
+        +"名称：可口可乐，数量：5瓶，单价：3.00(元)，小计：15.00(元)"
+               +" 名称：雪碧，数量：2瓶，单价：3.00(元)，小计：6.00(元)"
+               +" 名称：电池，数量：1个，单价：2.00(元)，小计：1.60(元)"
+              +"  ----------------------"
+        +"总计：22.60(元)"
+               +" 节省：0.40(元)"
+               +" **********************";
+
+        assertThat(ShoppingList,is(expectedShoppingList));
+    }
+
     @Test
     public void testGetCorrectShoppingListForSingleItem() throws Exception {
         // given

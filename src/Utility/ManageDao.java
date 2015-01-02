@@ -14,11 +14,24 @@ public class ManageDao {
 
     ArrayList<String> indexList = new ArrayList<String>();
 
+    String GoodPath;
+    String List;
+    public ManageDao(){
+
+    }
+    public ManageDao(String path){
+        GoodPath=path;
+    }
+    public ManageDao(String path,String URL){
+        GoodPath=path;
+        List=URL;
+    }
     public ArrayList<Item> getData() {
+
         //从JSon文件读取数据
         StringBuffer stringBuffer = new StringBuffer();
 
-        String GoodPath = "F:\\good1.json";
+       // String GoodPath = "F:\\good1.json";
 
         //输出数据流stringBuffer
         stringBuffer = getDataStream(GoodPath);
@@ -37,7 +50,7 @@ public class ManageDao {
         Item item=null;
         double discount;
         //获取索引文件
-        String List="F:\\list.json";
+       // String List="F:\\list.json";
         StringBuffer  stringIndex=getDataStream(List);
         //stringIndex.deleteCharAt(0);
 
