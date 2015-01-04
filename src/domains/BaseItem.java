@@ -8,6 +8,7 @@ public class BaseItem {
     private String unit;
     private double price;
     private double discount;
+    private boolean promotion;
 
     public BaseItem() {
     }
@@ -16,12 +17,26 @@ public class BaseItem {
         this.unit = unit;
         this.price = price;
         this.discount = discount;
+        this.promotion=false;
+    }
+    public BaseItem(String unit, double price, double discount,boolean promotion) {
+        this.unit = unit;
+        this.price = price;
+        this.discount = discount;
+        this.promotion=promotion;
+    }
+    public BaseItem(String unit,double price,boolean promotion){
+        this.unit = unit;
+        this.price = price;
+        this.discount = 1;
+        this.promotion=promotion;
     }
 
     public BaseItem(String unit, double price) {
         this.unit = unit;
         this.price = price;
         this.discount = 1;
+        this.promotion=false;
     }
 
     public String getUnit() {
@@ -46,5 +61,19 @@ public class BaseItem {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public boolean isPromotion() {
+        return promotion;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "unit='" + unit + '\'' +
+                ", price=" + price +
+                ", discount=" + discount +
+                ", promotion=" + promotion
+                ;
     }
 }

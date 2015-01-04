@@ -14,6 +14,12 @@ public class Item extends BaseItem {
         this.name = name;
     }
 
+    public Item(String barCode, String name, String unit, double price, boolean promotion) {
+
+        super(unit, price, promotion);
+        this.barCode = barCode;
+        this.name = name;
+    }
     public Item(String barCode, String name, String unit, double price) {
 
         super(unit, price);
@@ -25,4 +31,17 @@ public class Item extends BaseItem {
         return name;
     }
 
+    @Override
+    public boolean isPromotion() {
+        return super.isPromotion();
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "barCode='" + barCode + '\'' +
+                ", name='" + name + '\'' +
+                super.toString()+
+                '}';
+    }
 }

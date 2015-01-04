@@ -16,13 +16,13 @@ public class POSmain {
 
         // given
         //索引文件和列表文件存放的位置
-        String GoodPath="F:\\good1.json";
-        String List="F:\\list.json";
-
+       //String GoodPath="F:\\good1.json";
+      //  String List="F:\\list.json";
+         String GoodPath="F:\\good.json";
         ShoppingChart shoppingChart = new ShoppingChart();
 
-        ManageDao mainDao = new ManageDao(GoodPath,List);
-
+        //ManageDao mainDao = new ManageDao(GoodPath,List);
+        ManageDao mainDao=new ManageDao(GoodPath);
         shoppingChart.setItems(mainDao.getData());
 
         // when

@@ -47,8 +47,8 @@ public class ManageDao {
     //获取json对象从json数组里面
     public ArrayList<Item> getDataFromArray(StringBuffer stringBuffer){
         ArrayList<Item> shoocar=new ArrayList<Item>();
-        Item item=null;
-        double discount;
+
+
         //获取索引文件
        // String List="F:\\list.json";
         StringBuffer  stringIndex=getDataStream(List);
@@ -64,30 +64,41 @@ public class ManageDao {
         //通过索引文件找到项
         JSONObject jsonobj=JSONObject.fromObject(stringBuffer.toString());
         for(int i=0;i<indexList.size();i++) {
-            JSONObject jsonarr = jsonobj.getJSONObject(indexList.get(i));
-            String name=jsonarr.getString("name");
-            String unit=jsonarr.getString("unit");
-            double price=jsonarr.getDouble("price");
-            //是否存在打折情况
-            if(jsonarr.containsKey("discount")){
-                discount=jsonarr.getDouble("discount");
-                if(discount>0&&discount<1) {
-                    item = new Item(indexList.get(i), name, unit, price, discount);
-                }
-                else{
-                    System.out.println("打折信息错误！");
-                    System.exit(0);
+            //判断能否通过索引找到商品，如果能够找到，则输入，否则输出错误
+            if(jsonobj.containsKey(indexList.get(i))) {
+                JSONObject jsonarr = jsonobj.getJSONObject(indexList.get(i));
+                shoocar.add(JSonParse(jsonarr,i));
 
-                }
             }
-            else {
-                item = new Item(indexList.get(i), name, unit, price);
-            }
-            shoocar.add(item);
 
         }
         return shoocar;
     }
+public Item JSonParse(JSONObject jsonarr,int i){
+
+    double discount;
+    Item item=null;
+    String name = jsonarr.getString("name");
+    String unit = jsonarr.getString("unit");
+    double price = jsonarr.getDouble("price");
+    //是否存在打折情况
+    if (jsonarr.containsKey("discount")) {
+        discount = jsonarr.getDouble("discount");
+
+        item = new Item(indexList.get(i), name, unit, price, discount);
+    } else {
+        //如果包括键promotion，则进行买二赠一的活动
+        if(jsonarr.containsKey("promotion")){
+            boolean promotion=jsonarr.getBoolean("promotion");
+            item=new Item(indexList.get(i),name,unit,price,promotion);
+        }
+        else {
+            item = new Item(indexList.get(i), name, unit, price);
+        }
+    }
+
+    return item;
+}
 
 //
 //   json解析数据到数组里面
@@ -97,28 +108,15 @@ public class ManageDao {
         Item item=null;
         double discount;
         JSONArray jsonArr=JSONArray.fromObject(stringBuffer.toString());
-
+        //把条形码信息存到索引数组里面
         for(int i=0;i<jsonArr.size();i++){
             String barcode=jsonArr.getJSONObject(i).getString("barcode");
-            String name=jsonArr.getJSONObject(i).getString("name");
-            String unit=jsonArr.getJSONObject(i).getString("unit");
-            double price=jsonArr.getJSONObject(i).getDouble("price");
-            //是否存在打折情况
-            if(jsonArr.getJSONObject(i).containsKey("discount")){
-                discount=jsonArr.getJSONObject(i).getDouble("discount");
-                if(discount>0&&discount<1) {
-                    item = new Item(barcode, name, unit, price, discount);
-                }
-                else{
-                    System.out.println("打折信息错误！");
-                    System.exit(0);
+            indexList.add(i,barcode);
+        }
+        for(int i=0;i<jsonArr.size();i++){
+           JSONObject jsonarr=jsonArr.getJSONObject(i);
 
-                }
-            }
-            else {
-                item = new Item(barcode, name, unit, price);
-            }
-            shoocar.add(item);
+            shoocar.add(JSonParse(jsonarr,i));
         }
         return shoocar;
     }

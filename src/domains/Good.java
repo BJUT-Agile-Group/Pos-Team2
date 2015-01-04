@@ -9,13 +9,28 @@ public class Good extends BaseItem {
     int quantity;//数量
     double amount;//总价，打折后
     double save;//这个商品节省了多少钱
+    String name;
 
+
+
+    public Good(double price, double discount, String unit,boolean promotion,String name)//首次输入时使用
+    {
+
+        super(unit, price, discount,promotion);
+        this.quantity = 1;
+        this.amount = price * discount;
+        this.save = price * (1 - discount);
+        this.name=name;
+
+    }
     public Good(double price, double discount, String unit)//首次输入时使用
     {
+
         super(unit, price, discount);
         this.quantity = 1;
         this.amount = price * discount;
         this.save = price * (1 - discount);
+
     }
 
     public void statistics(double price2, double discount2)//在后面还有输入时使用
@@ -59,4 +74,7 @@ public class Good extends BaseItem {
         this.save = save;
     }
 
+    public String getName() {
+        return name;
+    }
 }
