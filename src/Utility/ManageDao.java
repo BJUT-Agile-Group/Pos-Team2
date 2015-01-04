@@ -10,7 +10,7 @@ import net.sf.json.JSONObject;
 /**
  * Created by KEN on 2014/12/30.
  */
-public class ManageDao {
+public class ManageDao implements DataBase{
 
     ArrayList<String> indexList = new ArrayList<String>();
 
@@ -44,13 +44,10 @@ public class ManageDao {
             return getDataFromArray(stringBuffer);
         }
     };
-    //获取json对象从json数组里面
-    public ArrayList<Item> getDataFromArray(StringBuffer stringBuffer){
-        ArrayList<Item> shoocar=new ArrayList<Item>();
 
-
+    public void setIndexList(String List) {
         //获取索引文件
-       // String List="F:\\list.json";
+        // String List="F:\\list.json";
         StringBuffer  stringIndex=getDataStream(List);
         //stringIndex.deleteCharAt(0);
 
@@ -59,7 +56,13 @@ public class ManageDao {
         for(int i=0;i<jsonArr.size();i++){
             indexList.add(i,jsonArr.getString(i));
         }
+    }
 
+    //获取json对象从json数组里面
+    public ArrayList<Item> getDataFromArray(StringBuffer stringBuffer){
+        ArrayList<Item> shoocar=new ArrayList<Item>();
+
+        setIndexList(List);
 
         //通过索引文件找到项
         JSONObject jsonobj=JSONObject.fromObject(stringBuffer.toString());
@@ -85,7 +88,13 @@ public Item JSonParse(JSONObject jsonarr,int i){
     if (jsonarr.containsKey("discount")) {
         discount = jsonarr.getDouble("discount");
 
-        item = new Item(indexList.get(i), name, unit, price, discount);
+
+        if(jsonarr.containsKey("promotion")){
+            boolean promotion=jsonarr.getBoolean("promotion");
+            item=new Item(indexList.get(i),name,unit,price,discount,promotion);
+        }else{
+            item = new Item(indexList.get(i), name, unit, price, discount);
+        }
     } else {
         //如果包括键promotion，则进行买二赠一的活动
         if(jsonarr.containsKey("promotion")){

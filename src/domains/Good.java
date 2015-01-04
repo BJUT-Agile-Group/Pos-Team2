@@ -32,6 +32,18 @@ public class Good extends BaseItem {
         this.save = price * (1 - discount);
 
     }
+    public boolean valiate(){
+        if(getQuantity()>=2&&getDiscount()<1&&getDiscount()>0&isPromotion()){
+            System.out.println("同种商品不能同时打折和优惠 name"+getName()+"discount"+getDiscount()+"promotion"+isPromotion());
+            return false;
+        }
+        else if(!super.valiate()){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
     public void statistics(double price2, double discount2)//在后面还有输入时使用
     {

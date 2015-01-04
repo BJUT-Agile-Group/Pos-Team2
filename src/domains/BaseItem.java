@@ -38,6 +38,20 @@ public class BaseItem {
         this.discount = 1;
         this.promotion=false;
     }
+    public boolean valiate(){
+        if(price<0){
+            System.out.println("价格不合理 price="+price);
+            return false;
+        }
+        else if(discount>1||discount<0){
+            System.out.println("打折不合理 discount="+discount);
+            return false;
+        }
+       else
+        {
+            return true;
+        }
+    }
 
     public String getUnit() {
         return unit;

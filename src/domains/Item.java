@@ -7,6 +7,12 @@ public class Item extends BaseItem {
     private String barCode;
     private String name;
 
+    public Item(String barCode, String name, String unit, double price, double discount,boolean promotion) {
+
+        super(unit, price, discount,promotion);
+        this.barCode = barCode;
+        this.name = name;
+    }
     public Item(String barCode, String name, String unit, double price, double discount) {
 
         super(unit, price, discount);

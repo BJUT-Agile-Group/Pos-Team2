@@ -14,7 +14,7 @@ public class Pos {
         ArrayList<Item> items = shoppingChart.getItems();
         Map<String, Good> goodMapping = new HashMap<String, Good>();//映射存储商品名字和信息的映射
         List<String> nameList = new ArrayList<String>();//商品名字列表在遍历HashMap时使用，Hashmap自动排序遭不住啊……
-        List<Good> OfferList = new ArrayList<Good>();
+        List<Good> OfferList = new ArrayList<Good>();//要打折的商品组
         for (int i = 0; i < items.size(); i++) {
             Item item = items.get(i);
 
@@ -26,6 +26,9 @@ public class Pos {
                 goodMapping.get(item.getName()).statistics(item.getPrice(), item.getDiscount());
             }
         }
+
+
+
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
@@ -43,19 +46,30 @@ public class Pos {
 //            stringBuilder.append("名称：").append(entry.getKey());
 //            stringBuilder.append(((Good)entry.getValue()).toString());
 //        }
-        while (iterator.hasNext())//遍历应该看得懂吧，看不懂，宝宝实在是……
+        while (iterator.hasNext())
         {
             String name = (String) iterator.next();
             stringBuilder.append("名称：").append(name);
             Good good = goodMapping.get(name);
+            //进行验证
+            //错误信息拦截
+            if(!good.valiate()){
+                System.exit(-1);
+            }
+            //商品要优惠
+            if (good.isPromotion() && good.getQuantity() >=OfferNumber) {
+                save = save+good.getPrice();
+                if(good.getQuantity() != OfferNumber) {
+                    good.setAmount(good.getAmount() - good.getPrice());
+                }
+                OfferList.add(good);
+            }
+
+
             stringBuilder.append(good.toString());
             total = total + good.getAmount();
             save = save + good.getSave();
-            //商品要优惠
-            if (good.isPromotion() && good.getQuantity() >= OfferNumber) {
-                save = save + good.getPrice();
-                OfferList.add(good);
-            }
+
         }
 
         if (OfferList.size()!= 0) {
