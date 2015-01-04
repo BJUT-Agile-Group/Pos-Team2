@@ -23,10 +23,10 @@ public class POSmain {
         ShoppingChart shoppingChart = new ShoppingChart();
 
         ManageDao mainDao = new ManageDao(GoodPath,List);
-        CouchBaseDao couchdao=new CouchBaseDao();
+       // CouchBaseDao couchdao=new CouchBaseDao();
       //  ManageDao mainDao=new ManageDao(GoodPath);
-        //shoppingChart.setItems(mainDao.getData());
-        shoppingChart.setItems(couchdao.getData());
+        shoppingChart.setItems(mainDao.getData());
+        //shoppingChart.setItems(couchdao.getData());
 
         // when
         Pos pos = new Pos();
