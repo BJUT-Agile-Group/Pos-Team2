@@ -32,8 +32,8 @@ public class Pos {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
-                .append("***商店购物清单***\n")
-                .append("打印时间:").append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())).append("\n");
+                .append("***商店购物清单***\n");
+               // .append("打印时间:").append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())).append("\n");
 
 
         double total = 0, save = 0;
@@ -73,7 +73,7 @@ public class Pos {
         }
 
         if (OfferList.size()!= 0) {
-            stringBuilder.append("\n挥泪赠送商品:\n").append("----------------------\n");
+            stringBuilder.append("挥泪赠送商品:\n").append("----------------------\n");
             for (int i = 0; i < OfferList.size(); i++) {
                 stringBuilder.append("名称：").append(OfferList.get(i).getName()).append(",数量：").append(1).append(OfferList.get(i).getUnit()).append("\n");
             }

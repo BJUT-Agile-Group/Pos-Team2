@@ -4,7 +4,7 @@ import domains.Item;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 /**
@@ -49,7 +49,7 @@ public class ManageDao implements DataBase{
         //获取索引文件
         // String List="F:\\list.json";
         StringBuffer  stringIndex=getDataStream(List);
-        //stringIndex.deleteCharAt(0);
+       //stringIndex.deleteCharAt(0);
 
         JSONArray jsonArr=JSONArray.fromObject(stringIndex.toString());
 
