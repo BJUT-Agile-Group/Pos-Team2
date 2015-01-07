@@ -9,20 +9,15 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 
-
-
-
 public class Main {
 	public  static void main(String[] args) throws ParseException{
-	
-        
-		//从JSon文件读取数据
+
 		StringBuffer stringBuffer = new StringBuffer();
 		String line = null ;
 		try {
@@ -35,14 +30,17 @@ public class Main {
 		} catch (IOException e) {
 		e.printStackTrace();
 		}
-		//将Json文件数据形成JSONObject对象
-		System.out.println(stringBuffer.toString());
+
+		//System.out.println(stringBuffer.toString());
+		stringBuffer.deleteCharAt(0);
 		List<Item> shoocar=new ArrayList<Item>();
 		JSONObject jsonObj=JSONObject.fromObject(stringBuffer.toString());
 		JSONArray jsonArr=jsonObj.getJSONArray("good");
 		
 		
 		for(int i=0;i<jsonArr.size();i++){
+			System.out.println(jsonArr.getJSONObject(i).toString());
+
 			String barcode=jsonArr.getJSONObject(i).getString("barcode");
 			String name=jsonArr.getJSONObject(i).getString("name");
 			String unit=jsonArr.getJSONObject(i).getString("unit");
@@ -52,7 +50,7 @@ public class Main {
 		}
 		
 		for(int i=0;i<shoocar.size();i++){
-			System.out.println(shoocar.get(i).tostring());
+			//System.out.println(shoocar.get(i).tostring());
 		}
 		
 		}

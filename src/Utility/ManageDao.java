@@ -12,10 +12,10 @@ import net.sf.json.JSONObject;
  */
 public class ManageDao implements DataBase{
 
-    ArrayList<String> indexList = new ArrayList<String>();
+    private ArrayList<String> indexList = new ArrayList<String>();
 
-    String GoodPath;
-    String List;
+    private String GoodPath;
+    private String List;
     public ManageDao(){
 
     }
@@ -23,18 +23,33 @@ public class ManageDao implements DataBase{
         GoodPath=path;
     }
     public ManageDao(String path,String URL){
-        GoodPath=path;
-        List=URL;
+        this.GoodPath=path;
+        this.List=URL;
     }
+
+    public ArrayList<String> getIndexList() {
+        return indexList;
+    }
+
+    public void setIndexList(ArrayList<String> indexList) {
+        this.indexList = indexList;
+    }
+
+    public String getGoodPath() {
+        return GoodPath;
+    }
+
+    public String getList() {
+        return List;
+    }
+
     public ArrayList<Item> getData() {
 
         //从JSon文件读取数据
         StringBuffer stringBuffer = new StringBuffer();
 
-       // String GoodPath = "F:\\good1.json";
-
         //输出数据流stringBuffer
-        stringBuffer = getDataStream(GoodPath);
+        stringBuffer = getDataStream(getGoodPath());
         stringBuffer.deleteCharAt(0);
 
         if (stringBuffer.charAt(0) == '[') {
@@ -54,7 +69,7 @@ public class ManageDao implements DataBase{
         JSONArray jsonArr=JSONArray.fromObject(stringIndex.toString());
 
         for(int i=0;i<jsonArr.size();i++){
-            indexList.add(i,jsonArr.getString(i));
+            this.indexList.add(i,jsonArr.getString(i));
         }
     }
 
@@ -62,14 +77,14 @@ public class ManageDao implements DataBase{
     public ArrayList<Item> getDataFromArray(StringBuffer stringBuffer){
         ArrayList<Item> shoocar=new ArrayList<Item>();
 
-        setIndexList(List);
+        setIndexList(getList());
 
         //通过索引文件找到项
         JSONObject jsonobj=JSONObject.fromObject(stringBuffer.toString());
-        for(int i=0;i<indexList.size();i++) {
+        for(int i=0;i<getIndexList().size();i++) {
             //判断能否通过索引找到商品，如果能够找到，则输入，否则输出错误
-            if(jsonobj.containsKey(indexList.get(i))) {
-                JSONObject jsonarr = jsonobj.getJSONObject(indexList.get(i));
+            if(jsonobj.containsKey(getIndexList().get(i))) {
+                JSONObject jsonarr = jsonobj.getJSONObject(getIndexList().get(i));
                 shoocar.add(JSonParse(jsonarr,i));
 
             }
@@ -79,7 +94,9 @@ public class ManageDao implements DataBase{
     }
 public Item JSonParse(JSONObject jsonarr,int i){
 
-    double discount;
+    double discount=1;
+    boolean promotion=false;
+    double vipDiscount=1;
     Item item=null;
     String name = jsonarr.getString("name");
     String unit = jsonarr.getString("unit");
@@ -87,25 +104,16 @@ public Item JSonParse(JSONObject jsonarr,int i){
     //是否存在打折情况
     if (jsonarr.containsKey("discount")) {
         discount = jsonarr.getDouble("discount");
-
-
-        if(jsonarr.containsKey("promotion")){
-            boolean promotion=jsonarr.getBoolean("promotion");
-            item=new Item(indexList.get(i),name,unit,price,discount,promotion);
-        }else{
-            item = new Item(indexList.get(i), name, unit, price, discount);
-        }
-    } else {
-        //如果包括键promotion，则进行买二赠一的活动
-        if(jsonarr.containsKey("promotion")){
-            boolean promotion=jsonarr.getBoolean("promotion");
-            item=new Item(indexList.get(i),name,unit,price,promotion);
-        }
-        else {
-            item = new Item(indexList.get(i), name, unit, price);
-        }
     }
-
+    if(jsonarr.containsKey("promotion")) {
+        promotion = jsonarr.getBoolean("promotion");
+    }
+    if(jsonarr.containsKey("vipDiscount")){
+        vipDiscount=jsonarr.getDouble("vipDiscount");
+    }
+    item=new Item(getIndexList().get(i),name,unit,price,discount,promotion,vipDiscount);
+    //前面错误拦截
+    item.valiate();
     return item;
 }
 

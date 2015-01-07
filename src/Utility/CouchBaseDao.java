@@ -49,8 +49,8 @@ public class CouchBaseDao extends ManageDao {
 
         for(int i=0;i<josnarr.size();i++){
 
-            indexList.add(i,josnarr.get(i).toString());
-            JSONObject jsonarrlit=goodjson.getJSONObject(indexList.get(i));
+            getIndexList().add(i,josnarr.get(i).toString());
+            JSONObject jsonarrlit=goodjson.getJSONObject(getIndexList().get(i));
             shoocar.add(JSonParse(jsonarrlit,i));
 
         }

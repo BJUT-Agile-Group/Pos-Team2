@@ -9,7 +9,7 @@ public class BaseItem {
     private double price;
     private double discount;
     private boolean promotion;
-
+    private double vipDiscount;
     public BaseItem() {
     }
 
@@ -18,6 +18,13 @@ public class BaseItem {
         this.price = price;
         this.discount = discount;
         this.promotion=false;
+    }
+    public BaseItem(String unit, double price, double discount,boolean promotion,double vipDiscount) {
+        this.unit = unit;
+        this.price = price;
+        this.discount = discount;
+        this.promotion=promotion;
+        this.vipDiscount=vipDiscount;
     }
     public BaseItem(String unit, double price, double discount,boolean promotion) {
         this.unit = unit;
@@ -45,6 +52,10 @@ public class BaseItem {
         }
         else if(discount>1||discount<0){
             System.out.println("打折不合理 discount="+discount);
+            return false;
+        }
+        else if(vipDiscount>1||vipDiscount<0){
+            System.out.println("vip优惠不合理 vipDiscount="+vipDiscount);
             return false;
         }
        else
@@ -81,13 +92,22 @@ public class BaseItem {
         return promotion;
     }
 
+    public double getVipDiscount() {
+        return vipDiscount;
+    }
+
+    public void setVipDiscount(double vipDiscount) {
+        this.vipDiscount = vipDiscount;
+    }
+
     @Override
     public String toString() {
         return
                 "unit='" + unit + '\'' +
                 ", price=" + price +
                 ", discount=" + discount +
-                ", promotion=" + promotion
+                ", promotion=" + promotion+
+                        ",vipDiscount="+vipDiscount
                 ;
     }
 }

@@ -19,11 +19,11 @@ public class Pos {
             Item item = items.get(i);
 
             if (goodMapping.containsKey(item.getName()) == false) {//如果不存在这个映射就加入这个映射
-                goodMapping.put(item.getName(), new Good(item.getPrice(), item.getDiscount(), item.getUnit(), item.isPromotion(),item.getName()));
+                goodMapping.put(item.getName(), new Good(item.getPrice(), item.getDiscount(), item.getUnit(), item.isPromotion(),item.getName(),item.getVipDiscount()));
                 nameList.add(item.getName());
             } else//如果存在就对信息进行加减操作
             {
-                goodMapping.get(item.getName()).statistics(item.getPrice(), item.getDiscount());
+                goodMapping.get(item.getName()).statistics(item.getPrice(), item.getDiscount(),item.getVipDiscount());
             }
         }
 
@@ -32,20 +32,13 @@ public class Pos {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
-                .append("***商店购物清单***\n");
-               // .append("打印时间:").append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())).append("\n");
+                .append("***商店购物清单***\n")
+               .append("打印时间:").append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())).append("\n");
 
 
         double total = 0, save = 0;
         Iterator iterator = nameList.iterator();
-        //下面是按自动排序的顺序输出的遍历，又需要再注释回来
-        //Iterator it=goodMapping.entrySet().iterator();
-//        while(iterator.hasNext())
-//        {
-//            Map.Entry entry= (Map.Entry) iterator.next();
-//            stringBuilder.append("名称：").append(entry.getKey());
-//            stringBuilder.append(((Good)entry.getValue()).toString());
-//        }
+
         while (iterator.hasNext())
         {
             String name = (String) iterator.next();
@@ -56,6 +49,7 @@ public class Pos {
             if(!good.valiate()){
                 System.exit(-1);
             }
+
             //商品要优惠
             if (good.isPromotion() && good.getQuantity() >=OfferNumber) {
                 save = save+good.getPrice();
@@ -64,7 +58,6 @@ public class Pos {
                 }
                 OfferList.add(good);
             }
-
 
             stringBuilder.append(good.toString());
             total = total + good.getAmount();

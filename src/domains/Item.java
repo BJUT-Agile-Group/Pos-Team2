@@ -7,9 +7,9 @@ public class Item extends BaseItem {
     private String barCode;
     private String name;
 
-    public Item(String barCode, String name, String unit, double price, double discount,boolean promotion) {
+    public Item(String barCode, String name, String unit, double price, double discount,boolean promotion,double vipDiscount) {
 
-        super(unit, price, discount,promotion);
+        super(unit, price, discount,promotion,vipDiscount);
         this.barCode = barCode;
         this.name = name;
     }
@@ -37,10 +37,9 @@ public class Item extends BaseItem {
         return name;
     }
 
-    @Override
-    public boolean isPromotion() {
-        return super.isPromotion();
-    }
+
+
+
 
     @Override
     public String toString() {

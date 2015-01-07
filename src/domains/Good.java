@@ -6,20 +6,20 @@ package domains;
  */
 public class Good extends BaseItem {
 
-    int quantity;//数量
-    double amount;//总价，打折后
-    double save;//这个商品节省了多少钱
-    String name;
+   private int quantity;//数量
+    private double amount;//总价，打折后
+    private double save;//这个商品节省了多少钱
+    private  String name;
 
 
-
-    public Good(double price, double discount, String unit,boolean promotion,String name)//首次输入时使用
+    //首次输入时使用
+    public Good(double price, double discount, String unit,boolean promotion,String name,double vipDiscount)//首次输入时使用
     {
 
-        super(unit, price, discount,promotion);
+        super(unit, price, discount,promotion,vipDiscount);
         this.quantity = 1;
-        this.amount = price * discount;
-        this.save = price * (1 - discount);
+        this.amount = price * discount*vipDiscount;
+        this.save = price * (1 - discount*vipDiscount);
         this.name=name;
 
     }
@@ -30,6 +30,7 @@ public class Good extends BaseItem {
         this.quantity = 1;
         this.amount = price * discount;
         this.save = price * (1 - discount);
+        this.name=name;
 
     }
     public boolean valiate(){
@@ -45,13 +46,18 @@ public class Good extends BaseItem {
         }
     }
 
-    public void statistics(double price2, double discount2)//在后面还有输入时使用
+    public void statistics(double price2, double discount2,double vipDiscount)//在后面还有输入时使用
+    {
+        this.quantity++;//数量加一
+        this.amount = this.amount + (price2 * discount2*vipDiscount);
+        this.save = this.save + price2 * (1 - discount2*vipDiscount);
+    }
+    public void statistics(double price2, double discount2)
     {
         this.quantity++;//数量加一
         this.amount = this.amount + (price2 * discount2);
         this.save = this.save + price2 * (1 - discount2);
     }
-
     public String toString()//变成字符串
     {
         StringBuilder stringBuilder = new StringBuilder();
@@ -89,4 +95,6 @@ public class Good extends BaseItem {
     public String getName() {
         return name;
     }
+
+
 }

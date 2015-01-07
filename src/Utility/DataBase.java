@@ -16,8 +16,8 @@ public interface DataBase {
    //获取数据源
     public Object  getData();
     //源里面获取对象，得到数组
-    public ArrayList<Item> getDataFromObject(StringBuffer stringBuffer);
+    public Object getDataFromObject(StringBuffer stringBuffer);
     //解析JSON数组对象
-    public Item JSonParse(JSONObject jsonarr,int i);
+    public Object JSonParse(JSONObject jsonarr,int i);
     public StringBuffer getDataStream(String file);
 }
