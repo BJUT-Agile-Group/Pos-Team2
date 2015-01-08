@@ -8,6 +8,16 @@ import java.util.*;
  */
 public class Pos {
     private static final int  OfferNumber=2;
+    private Person person=new Person();
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
     //返回主要的界面
     public String getShoppingList(ShoppingChart shoppingChart) {
 
@@ -32,8 +42,12 @@ public class Pos {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
-                .append("***商店购物清单***\n")
-               .append("打印时间:").append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())).append("\n");
+                .append("***商店购物清单***\n");
+
+        if(person.getName()!=null) {
+            stringBuilder.append("会员编号:").append(person.getName()).append("   会员积分:").append("getScore").append("\n");
+        }
+               stringBuilder.append("打印时间:").append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())).append("\n");
 
 
         double total = 0, save = 0;
@@ -78,7 +92,12 @@ public class Pos {
         }
         stringBuilder.append("**********************\n");
 
+        String str=stringBuilder.toString();
+        if(person.getName()!=null){
+            person.setScore(total);
+            str=str.replace("getScore",String.valueOf(person.getScore()));
 
-        return stringBuilder.toString();
+        }
+        return str;
     }
 }
